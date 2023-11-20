@@ -29,8 +29,6 @@ Route::get('/adm/no-meja', [MenuController::class, 'index'])->middleware('hak_ak
 Route::get('/meja/{id}', [MenuController::class, 'meja']);
 
 //Admin
-// Route::get('/adm/login', [AuthCon])
-
 Route::get('/adm/dashboard', function(){
     $posisi = UserPosisi::all();
     return view('admin.beranda', compact('posisi'));
@@ -47,11 +45,8 @@ Route::middleware(['hak_akses:1,2,3'])->group(function(){
 
     //produk
     Route::get('/adm/data-produk', [ProdukController::class, 'index']);
-    Route::post('/adm/produk', [ProdukController::class, 'store']);
-    Route::get('/adm/produk/tambah-data', [ProdukController::class, 'create']);
-    Route::get('/adm/produk/{id}/edit', [ProdukController::class, 'show']);
-    Route::patch('/adm/produk/{id}', [ProdukController::class, 'update']);
-    Route::get('/adm/produk/{id}', [ProdukController::class, 'destroy']);
+    
+    //karyawan
     Route::get('/adm/aktivasi-karyawan', [PegawaiController::class, 'aktivasi']);
 });
 
