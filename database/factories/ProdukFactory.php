@@ -17,6 +17,7 @@ class ProdukFactory extends Factory
         return [
             'nama' => $this->faker->foodName(),
             'kategori' => mt_rand(1,2),
+            'deskripsi' => $this->faker->sentence(),
             'harga' => mt_rand(5000,20000),
             'status' => mt_rand(0,1)
         ];

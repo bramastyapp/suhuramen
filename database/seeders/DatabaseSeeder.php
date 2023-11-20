@@ -7,6 +7,7 @@ use App\Models\ProdukKategori;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,14 +18,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(5)->create();
-        Produk::factory(10)->create();
-        
-        ProdukKategori::create([
-            'nama_kategori' => 'Makanan'
-        ]);
-        ProdukKategori::create([
-            'nama_kategori' => 'Minuman'
+        $this->call(UserRoleSeeder::class);
+        $this->call(UserPosisiSeeder::class);
+        $this->call(MenuSeeder::class);
+        $this->call(OutletSeeder::class);
+        // User::factory(5)->create();
+        // Produk::factory(10)->create();
+
+        User::create([
+            'name' => 'Bramastya',
+            'email' => 'bram@test.com',
+            'user_role' => 1,
+            'user_level' => 1,
+            'status' => 1,
+            'password' => Hash::make('12345678'),
         ]);
     }
 }

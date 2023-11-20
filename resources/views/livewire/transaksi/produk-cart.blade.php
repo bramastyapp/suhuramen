@@ -8,7 +8,7 @@
                             <div class="col">
                                 <span class="btn btn-gradient-success float-start btn-sm">
                                     <i class="mdi mdi-account-check btn-icon-prepend"></i>
-                                    Bram</span>
+                                    {{ $kasir->name }}</span>
                                 <input type="hidden" readonly class="form-control-plaintext form-control-sm"
                                     value="Bram">
                             </div>
@@ -16,7 +16,7 @@
                     </div>
                     <div class="col">
                         <div class="btn btn-gradient-info btn-sm float-end mb-3" wire:click="clear">
-                            Kosongkan <i class="mdi mdi-delete-variant btn-icon-append"></i>
+                            Reset <i class=" mdi mdi-recycle btn-icon-append"></i>
                         </div>
                     </div>
                 </div>
@@ -29,31 +29,29 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        @if (!empty($carts['products']))
+                        @if (!empty($carts['transaksi'][$index_transaksi]) && $carts['transaksi'][$index_transaksi]['id_user'] == $id_user)
 
-                            @foreach ($carts['products'] as $item)
+                            @foreach ($carts['transaksi'][$index_transaksi]['products'] as $index => $item)
                                 <tr>
                                     <td>{{ $item['nama'] }}</td>
                                     <td>Rp {{ number_format($item['harga'], 0, ',', '.') }}</td>
                                     <td>
-
-                                        @php
-                                            $index = array_search($item['id'], array_column($cart['qty'], 'id'));
-                                        @endphp
                                         <span>
                                             <i class="mdi mdi-minus-box menu-icon"
-                                                wire:click="qtyMin({{ $item['id'] }})" style="cursor: pointer"></i>
-                                            {{ $carts['qty'][$index]['qty'] }}
+                                                wire:click="qtyMin({{ $index }})"
+                                                style="cursor: pointer"></i>
+                                            {{ $item['qty'] }}
                                             <i class="mdi mdi-plus-box menu-icon"
-                                                wire:click="qtyPlus({{ $item['id'] }})" style="cursor: pointer"></i>
+                                                wire:click="qtyPlus({{ $index }})"
+                                                style="cursor: pointer"></i>
                                         </span>
                                     </td>
                                     <td>Rp
-                                        {{ number_format($carts['qty'][$index]['qty'] * $item['harga'], 0, ',', '.') }}
+                                        {{ number_format($item['qty'] * $item['harga'], 0, ',', '.') }}
                                     </td>
                                     <td>
                                         <div class="btn btn-gradient-dark btn-sm"
-                                            wire:click="hapusCartId({{ $item['id'] }})">
+                                            wire:click="hapusCartId({{ $index }})">
                                             <i class="mdi mdi-delete-forever"></i>
                                         </div>
                                     </td>
@@ -79,20 +77,30 @@
             <div class="card-body">
                 <table class="table table-hover">
                     <tbody>
-                        {{-- <tr>
-                            <th class="border-0">Pajak</th>
-                            <td class="border-0">10%</td>
+                        <tr>
+                            <td class="border-0 p-0 pb-3">Sub Total</td>
+                            <td class="border-0 p-0 float-end">{{ number_format($totalTransaksi, 0, '', '.') }}</td>
                         </tr>
                         <tr>
+                            <td class="border-0 p-0 pb-3">Pajak</td>
+                            <td class="border-0 p-0 float-end">{{ number_format($totalTransaksi*0.1, 0, '', '.') }}</td>
+                        </tr>
+                        {{-- <tr>
                             <th>Diskon</th>
                             <td>10%</td>
                         </tr> --}}
                         <tr>
-                            <th class="border-0 p-0">Total</th>
-                            <td class="border-0 p-0 float-end">
-                                Rp {{ number_format($totalTransaksi, 0, '', '.') }}
-                            </td>
+                            <th class=" border-0 p-0">Total</th>
+                            <th class=" border-0 p-0 float-end">
+                                Rp {{ number_format($totalTransaksi + ($totalTransaksi*0.1), 0, '', '.') }}
+                            </th>
                         </tr>
+                        {{-- <tr>
+                            <th class="border-0 p-0 pt-3">Kembali</th>
+                            <td class="border-0  p-0 pt-3 float-end">
+                                Rp {{ $bayar>$totalTransaksi ? number_format($bayar-$totalTransaksi, 0, '', '.') : 0 }}
+                            </td>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -103,56 +111,24 @@
                     <label class="form-label">Masukkan Uang</label>
                     <div>
                         <input type="text" class="form-control" wire:model="bayar" placeholder="0">
-                        @if ($totalTransaksi > $bayar)
+                        @if ($totalTransaksi + ($totalTransaksi*0.1) > $bayar)
                             <p class="text-danger text-center fw-light mb-0 mt-1" style="font-size: 0.8rem">Uang tidak
                                 cukup!</p>
                         @endif
                     </div>
                 </div>
             </div>
-            @if ($totalTransaksi > $bayar || $totalTransaksi == 0)
+            @if ($totalTransaksi + ($totalTransaksi*0.1) > $bayar || $totalTransaksi == 0)
                 <div class="btn bg-secondary m-4">
                     Pembayaran
                     <i class="mdi mdi-checkbox-marked-outline"></i>
                 </div>
             @else
-                <button class="btn btn-gradient-info m-4" wire:click="pembayaran({{ $totalTransaksi }})">
+                <button class="btn btn-gradient-info m-4" wire:click="pembayaran({{ $totalTransaksi + ($totalTransaksi*0.1) }})">
                     Pembayaran
                     <i class="mdi mdi-checkbox-marked-outline"></i>
                 </button>
         </div>
         @endif
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="card">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pembayaran</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-3 col-form-label">Total</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                    value="Rp {{ $totalTransaksi }}">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputPassword" class="col-sm-3 col-form-label">Bayar</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control rupiah">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-gradient-dark" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-gradient-info">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

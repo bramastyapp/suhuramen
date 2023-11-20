@@ -2,8 +2,14 @@
 @section('title', 'Produk | Edit Produk Kategori')
 
 @section('main')
-    <div class="h2 mb-3">Edit Data</div>
-    <a href="{{url("adm/produk-kategori")}}" class="btn btn-gradient-success mb-3">Kembali</a>
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-lead-pencil"></i>
+            </span> Edit Kategori
+        </h3>
+        <a href="{{url("adm/produk-kategori")}}" class="btn btn-gradient-success mb-3">Kembali</a>
+    </div>
     <div class="card">
         <div class="card-body">
             <form action="{{url("adm/produk-kategori/$data->id")}}" method="post">

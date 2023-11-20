@@ -1,0 +1,10 @@
+[
+    {
+        "kode": "1",
+        "nama_role": "Admin"
+    },
+    {
+        "kode": "2",
+        "nama_role": "Pembeli"
+    }
+]

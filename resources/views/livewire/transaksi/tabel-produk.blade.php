@@ -19,7 +19,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach($search_results as $result)
                             <li class="list-group-item list-group-item-action">
-                                <a class="text-decoration-none text-black" wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result->id }})" href="#">
+                                <a class="text-decoration-none text-black" wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result->id}}, {{$kasir->id}})" href="#">
                                     {{ $result->nama }}
                                 </a>
                             </li>

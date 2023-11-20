@@ -15,10 +15,13 @@ class CreateItemTransaksisTable extends Migration
     {
         Schema::create('item_transaksis', function (Blueprint $table) {
             $table->id();
+            $table->string('id_user');
             $table->integer('id_transaksi');
             $table->integer('id_produk');
             $table->integer('qty');
             $table->integer('harga_saat_transaksi');
+            $table->integer('jenis_transaksi');
+            $table->integer('status_transaksi');
             $table->timestamps();
         });
     }

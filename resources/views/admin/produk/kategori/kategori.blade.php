@@ -4,12 +4,18 @@
 
 @section('main')
 @include('sweetalert::alert')
-    <div class="h2 mb-3">Kelola Kategori</div>
 
-    <button type="button" class="btn btn-gradient-success mb-3" data-bs-toggle="modal" data-bs-target="#tambah-kategori">
-        Tambah
-        <i class="mdi mdi-shape-square-plus btn-icon-append"></i>
-    </button>
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-view-day"></i>
+            </span> Kelola Kategori
+        </h3>
+        <button type="button" class="btn btn-gradient-success mb-3" data-bs-toggle="modal" data-bs-target="#tambah-kategori">
+            Tambah Kategori
+            <i class="mdi mdi-shape-square-plus btn-icon-append"></i>
+        </button>
+    </div>
       
     <div class="row">
         <div class="card mb-3">

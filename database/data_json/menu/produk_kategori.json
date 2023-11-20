@@ -1,0 +1,14 @@
+[
+    {
+        "kode_kategori": "R",
+        "nama_kategori": "Ramen"
+    },
+    {
+        "kode_kategori": "M",
+        "nama_kategori": "Minuman"
+    },
+    {
+        "kode_kategori": "T",
+        "nama_kategori": "Topping"
+    }
+]
