@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
-use App\Models\ProdukKategori;
-use Illuminate\Http\Request;
-
 class StatusController extends Controller
 {
     public function __construct()

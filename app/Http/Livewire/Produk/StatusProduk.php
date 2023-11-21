@@ -12,30 +12,50 @@ class StatusProduk extends Component
     {
         $produk = Produk::all();
         $kategori = ProdukKategori::all();
+
         $status[] = [
             'id' => 0,
-            'nama' => 'Belum Dijual',
-            'warna' => 'dark',
-        ];
-        $status[] = [
-            'id' => 1,
             'nama' => 'Habis',
             'warna' => 'danger',
         ];
         $status[] = [
-            'id' => 2,
+            'id' => 1,
             'nama' => 'Aktif',
             'warna' => 'success',
         ];
+        $status_produk = [
+            0 => [
+                'id' => 0,
+                'nama' => 'Tidak Aktif',
+                'warna' => 'dark'
+            ],
+            1 => [
+                'id' => 1,
+                'nama' => 'Aktif',
+                'warna' => 'success'
+            ],
+        ];
 
-        return view('livewire.produk.status-produk', ['datas' => $produk, 'status' => $status, 'kategori' => $kategori]);
+        return view('livewire.produk.status-produk', [
+            'datas' => $produk, 
+            'status' => $status, 
+            'status_produk' => $status_produk, 
+            'kategori' => $kategori
+        ]);
     }
 
     public function updateStatus($id, $status)
-    {        
+    {
         $data = Produk::find($id);
         $data->status = $status;
         $data->save();
-        return back()->with('toast_success', 'Status berhasil diperbarui');
+        // return back()->with('toast_success', 'Status berhasil diperbarui');
+    }
+    public function updateStatusProduk($id, $status)
+    {
+        $data = Produk::find($id);
+        $data->status_produk = $status;
+        $data->save();
+        // return back()->with('toast_success', 'Status berhasil diperbarui');
     }
 }

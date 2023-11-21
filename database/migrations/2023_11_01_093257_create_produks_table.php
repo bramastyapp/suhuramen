@@ -22,6 +22,7 @@ class CreateProduksTable extends Migration
             $table->string('gambar')->nullable();
             $table->integer('harga');
             $table->integer('status');
+            $table->integer('status_produk');
             $table->timestamps();
         });
     }

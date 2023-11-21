@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Transaksi;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
@@ -17,9 +16,7 @@ class TransaksiController extends Controller
     
     public function index()
     {
-        $kasir = User::all();
-        $transaksi = Transaksi::all();
-        return view('admin.transaksi.transaksi', compact('transaksi', 'kasir'));
+        return view('admin.transaksi.transaksi');
     }
     public function create()
     {

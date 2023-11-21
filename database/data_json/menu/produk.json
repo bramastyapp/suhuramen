@@ -4,7 +4,9 @@
         "kategori": "1",
         "nama": "Super Ultimate Ramen",
         "harga": "41000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -12,7 +14,9 @@
         "kategori": "1",
         "nama": "Volcano Ramen",
         "harga": "26000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -20,7 +24,9 @@
         "kategori": "1",
         "nama": "Black Tokyo Ramen",
         "harga": "30000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -28,7 +34,9 @@
         "kategori": "1",
         "nama": "Samurai Ramen",
         "harga": "23000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -36,7 +44,9 @@
         "kategori": "1",
         "nama": "Hokaido Ramen",
         "harga": "31000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -44,7 +54,9 @@
         "kategori": "1",
         "nama": "Miso Ramen",
         "harga": "28000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "makanan.jpg",
         "deskripsi": "-"
     },
     {
@@ -52,7 +64,9 @@
         "kategori": "2",
         "nama": "Ocha",
         "harga": "13000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -60,7 +74,9 @@
         "kategori": "2",
         "nama": "Coffe",
         "harga": "11000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -68,7 +84,9 @@
         "kategori": "2",
         "nama": "Matcha",
         "harga": "18000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -76,7 +94,9 @@
         "kategori": "2",
         "nama": "Choco",
         "harga": "17000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -84,7 +104,9 @@
         "kategori": "2",
         "nama": "Latte",
         "harga": "23000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -92,7 +114,9 @@
         "kategori": "2",
         "nama": "Oreo Cocho",
         "harga": "15000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "minuman.jpg",
         "deskripsi": "-"
     },
     {
@@ -100,7 +124,9 @@
         "kategori": "3",
         "nama": "Chicken Karaage",
         "harga": "11000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     },
     {
@@ -108,7 +134,9 @@
         "kategori": "3",
         "nama": "Chicken Chasu",
         "harga": "8000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     },
     {
@@ -116,7 +144,9 @@
         "kategori": "3",
         "nama": "Chicken Katsu",
         "harga": "12000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     },
     {
@@ -124,7 +154,9 @@
         "kategori": "3",
         "nama": "Ajitama",
         "harga": "6000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     },
     {
@@ -132,7 +164,9 @@
         "kategori": "3",
         "nama": "Ebi Furai",
         "harga": "8000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     },
     {
@@ -140,7 +174,9 @@
         "kategori": "3",
         "nama": "Gyuniku",
         "harga": "16000",
-        "status": "1",
+        "status": "0",
+        "status_produk": "0",
+        "gambar": "topping.jpg",
         "deskripsi": "-"
     }
 ]

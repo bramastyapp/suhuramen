@@ -11,12 +11,15 @@ class Produk extends Component
 {
     protected $listeners = [
         'formClose',
+        'formKategoriProdukOpen',
+        'formKategoriClose',
         'produkTerhapus' => 'destroy'
     ];
 
     public $produkId;
     public $formVisible;
-    public $formEdit;
+    public $formEdit; 
+    public $formVisibleKategori;
 
     public function render()
     {
@@ -52,9 +55,10 @@ class Produk extends Component
         $this->formVisible = true;
         $this->formEdit = false;
     }
-    public function formEditOpen($produkId)
+    public function formEditOpen($id)
     {
-        $produk = ModelsProduk::find($produkId);
+        $this->produkId = $id;
+        $produk = ModelsProduk::find($id);
         $this->emit('editProduk', $produk);
         $this->formVisible = true;
         $this->formEdit = true;
@@ -64,5 +68,18 @@ class Produk extends Component
     {
         $this->formVisible = false;
         $this->formEdit = false;
+    }
+    
+    public function formKategoriProdukOpen()
+    {
+        $this->formVisible = false;
+        $this->formVisibleKategori = true;    
+    }
+    public function formKategoriClose()
+    {
+        $produk = ModelsProduk::find($this->produkId);
+        $this->emit('editProduk', $produk);
+        $this->formVisible = true;
+        $this->formVisibleKategori = false;
     }
 }

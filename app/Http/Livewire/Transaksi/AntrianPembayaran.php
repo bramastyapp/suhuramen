@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Transaksi;
 use App\Models\ItemTransaksi;
 use App\Models\Produk;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class AntrianPembayaran extends Component
@@ -96,7 +97,7 @@ class AntrianPembayaran extends Component
             'total' => $this->subTotal,
             'total_saat_transaksi' => $this->subTotal + ($this->subTotal*0.1),
             'status' => 1,
-            'verifikator' => 'di isi id_kasir',
+            'verifikator' => Auth::user()->id,
         ]);
         $item_transaksi = ItemTransaksi::where('id_transaksi', $this->idTransaksi)->get();
 

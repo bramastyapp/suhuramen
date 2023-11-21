@@ -6,6 +6,9 @@
             @livewire('produk.edit-produk')
         @endif
     @endif
+    @if ($formVisibleKategori)
+        @livewire('produk-kategori.tambah-kategori')
+    @endif
     <div class="page-header">
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
@@ -63,32 +66,5 @@
             </div>
         </div>
     @endforeach
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="text/javascript">
-        window.addEventListener('konfirmasi-hapus-show', event => {
-            Swal.fire({
-                title: "Peringatan!",
-                text: "Apa anda yakin ingin menghapus?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, hapus!",
-                cancelButtonText: "Batal",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emit('produkTerhapus');
-                }
-            });
-            
-        })
-        window.addEventListener('produk-terhapus', event => {
-            Swal.fire({
-                title: "Berhasil!",
-                text: "Data anda sudah terhapus.",
-                icon: "success"
-            });
-        })
 
-    </script>
 </div>

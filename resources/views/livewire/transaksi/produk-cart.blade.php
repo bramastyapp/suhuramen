@@ -8,9 +8,7 @@
                             <div class="col">
                                 <span class="btn btn-gradient-success float-start btn-sm">
                                     <i class="mdi mdi-account-check btn-icon-prepend"></i>
-                                    {{ $kasir->name }}</span>
-                                <input type="hidden" readonly class="form-control-plaintext form-control-sm"
-                                    value="Bram">
+                                    {{ $kasir->name }}</span>                                
                             </div>
                         </div>
                     </div>
@@ -124,7 +122,7 @@
                     <i class="mdi mdi-checkbox-marked-outline"></i>
                 </div>
             @else
-                <button class="btn btn-gradient-info m-4" wire:click="pembayaran({{ $totalTransaksi + ($totalTransaksi*0.1) }})">
+                <button class="btn btn-gradient-info m-4" wire:click="pembayaran({{ $totalTransaksi }})">
                     Pembayaran
                     <i class="mdi mdi-checkbox-marked-outline"></i>
                 </button>

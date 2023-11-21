@@ -9,11 +9,6 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('vendor/purpleadmin') }}/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="{{ asset('vendor/purpleadmin') }}/assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('vendor/purpleadmin') }}/assets/css/style.css">
     <!-- End layout styles -->
@@ -28,6 +23,25 @@
         rel="stylesheet" />
     @livewireStyles
 </head>
+<style>
+    .custom-modal {
+        position: fixed;
+        z-index: 1500;
+        background-color: rgba(49, 49, 49, 0.6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        outline: 0;
+    }
+
+    .custom-modal-body {
+        margin: 30px auto;
+    }
+</style>
 
 <body>
     <div class="container-scroller">
@@ -70,6 +84,68 @@
     <script src="{{ asset('vendor/purpleadmin') }}/assets/js/todolist.js"></script>
     <!-- End custom js for this page -->
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        // hapus produk
+        window.addEventListener('konfirmasi-hapus-show', event => {
+            Swal.fire({
+                title: "Peringatan!",
+                text: "Apa anda yakin ingin menghapus?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('produkTerhapus');
+                }
+            });
+
+        })
+        window.addEventListener('produk-terhapus', event => {
+            Swal.fire({
+                title: "Berhasil!",
+                text: "Data anda sudah terhapus.",
+                icon: "success"
+            });
+        })
+
+        // hapus produk kategori
+        window.addEventListener('konfirmasi-hapus-kategori', event => {
+            Swal.fire({
+                title: "Yakin ingin menghapus?",
+                text: "Pastikan bahwa kategori yang dihapus tidak ada produk yang masih tampil di menu.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('kategoriTerhapus');
+                }
+            });
+        })
+
+        window.addEventListener('kategori-terhapus', event => {
+            Swal.fire({
+                title: "Berhasil!",
+                text: "Data anda sudah terhapus.",
+                icon: "success"
+            });
+        })
+
+        window.addEventListener('ada-produk', event => {
+            Swal.fire({
+                title: "Perhatian!",
+                text: "Kategori tidak dapat terhapus karena masih ada produk di dalam kategori, pastikan lagi tidak ada produk yang memakai kategori yang akan dihapus.",
+                icon: "info"
+            });
+        })
+    </script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script>
         $(document).ready(function() {

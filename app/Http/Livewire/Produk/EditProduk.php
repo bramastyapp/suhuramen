@@ -97,7 +97,6 @@ class EditProduk extends Component
             'deskripsi' => $this->deskripsi,
             'gambar' => $nama_gambar,
             'harga' => $this->harga,
-            'status' => $produk->status,
         ]);
         $this->emit('formClose');
     }

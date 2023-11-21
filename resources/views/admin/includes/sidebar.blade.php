@@ -34,25 +34,27 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#kelola-menu" aria-expanded="false"
-                aria-controls="kelola-menu">
-                <span class="menu-title">Menu</span>
-                <i class="menu-arrow"></i>
-                <i class=" mdi mdi-view-list menu-icon"></i>
-            </a>
-            <div class="collapse" id="kelola-menu">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('adm/no-meja') }}">Daftar Meja</a></li>
-                    @if (Auth::user()->status === 1 && Auth::user()->user_level < 6)
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('adm/status-produk') }}">Status
-                                Produk</a>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </li>
-        @if (Auth::user()->status === 1 && Auth::user()->user_level < 4)
+        @if (Auth::user()->status === 1 && Auth::user()->user_level)
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#kelola-menu" aria-expanded="false"
+                    aria-controls="kelola-menu">
+                    <span class="menu-title">Menu</span>
+                    <i class="menu-arrow"></i>
+                    <i class=" mdi mdi-view-list menu-icon"></i>
+                </a>
+                <div class="collapse" id="kelola-menu">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('adm/no-meja') }}">Daftar Meja</a></li>
+                        @if (Auth::user()->status === 1 && Auth::user()->user_level < 6 && Auth::user()->user_level)
+                            <li class="nav-item"> <a class="nav-link" href="{{ url('adm/status-produk') }}">Status
+                                    Produk</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </li>
+        @endif
+        @if (Auth::user()->status === 1 && Auth::user()->user_level < 4 && Auth::user()->user_level)
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#kelola-produk" aria-expanded="false"
                     aria-controls="kelola-produk">
@@ -68,7 +70,7 @@
                         </li>
                 </div>
             </li>
-            @if (Auth::user()->user_level === 1 || Auth::user()->user_level === 2 || Auth::user()->user_level === 3)
+            @if (Auth::user()->status === 1 && Auth::user()->user_level < 4 && Auth::user()->user_level)
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#kelola-pegawai" aria-expanded="false"
                         aria-controls="kelola-pegawai">
@@ -92,7 +94,7 @@
                 </li>
             @endif
         @endif
-        @if (Auth::user()->user_level < 5)
+        @if (Auth::user()->status === 1 && Auth::user()->user_level < 5 && Auth::user()->user_level)
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#kelola-transaksi" aria-expanded="false"
                     aria-controls="kelola-transaksi">

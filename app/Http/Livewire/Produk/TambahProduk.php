@@ -52,7 +52,7 @@ class TambahProduk extends Component
             'kode' => 'required',
             'kategori' => 'required',
             'harga' => 'required|numeric',
-            'gambar' => 'image|max:1024',
+            // 'gambar' => 'image|max:1024',
         ], $messages);
 
         $nama_gambar = '';
@@ -75,6 +75,7 @@ class TambahProduk extends Component
             'gambar' => $nama_gambar,
             'harga' => $this->harga,
             'status' => 0,
+            'status_produk' => 0,
         ]);
 
         $this->nama = '';

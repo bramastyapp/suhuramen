@@ -1,23 +1,4 @@
 <div>
-    <style>
-        .custom-modal {
-            position: fixed;
-            z-index: 1500;
-            background-color: rgba(49, 49, 49, 0.6);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            outline: 0;
-        }
-
-        .custom-modal-body {
-            margin: 30px auto;
-        }
-    </style>
     <div class="custom-modal">
         <div class="custom-modal-body" style="max-width: 60%">
             <div class="card">
@@ -80,7 +61,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" href="" class="btn btn-gradient-primary btn-icon">
+                                    <button wire:click="$emit('formKategoriProdukOpen')" type="button" href="" class="btn btn-gradient-primary btn-icon">
                                         <i class="mdi mdi-library-plus"></i>
                                     </button>
 
@@ -91,23 +72,24 @@
                         <div class="col-12">
                             <label class="form-label">Deskripsi</label>
                             <input type="text" wire:model='deskripsi' class="form-control"
-                            placeholder="Deskripsi produk">
+                                placeholder="Deskripsi produk">
                         </div>
                         <div class="col-md-6">
                             <label for="gambar" class="form-label">Gambar</label>
-                            <input wire:model='gambar' class="form-control @error('gambar') is-invalid @enderror" type="file" id="gambar" name="gambar">
+                            <input wire:model='gambar' class="form-control @error('gambar') is-invalid @enderror"
+                                type="file" id="gambar" name="gambar">
                             @error('gambar')
-                            <span class="invalid-feedback">
-                                <p class="fst-italic mb-0" style="font-size: 0.8rem">{{ $message }}</p>
-                            </span>
-                        @enderror
+                                <span class="invalid-feedback">
+                                    <p class="fst-italic mb-0" style="font-size: 0.8rem">{{ $message }}</p>
+                                </span>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Preview</label>
                             @if ($gambar)
-                            <div class="text-center">
-                                <img src="{{ $gambar->temporaryUrl() }}" alt="" height="150">
-                            </div>
+                                <div class="text-center">
+                                    <img src="{{ $gambar->temporaryUrl() }}" alt="" height="150">
+                                </div>
                             @endif
                         </div>
                         <div class="modal-footer pb-0">

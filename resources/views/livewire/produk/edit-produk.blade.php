@@ -1,23 +1,4 @@
 <div>
-    <style>
-        .custom-modal {
-            position: fixed;
-            z-index: 1500;
-            background-color: rgba(49, 49, 49, 0.6);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            outline: 0;
-        }
-
-        .custom-modal-body {
-            margin: 30px auto;
-        }
-    </style>
     <div class="custom-modal">
         <div class="custom-modal-body" style="max-width: 60%">
             <div class="card">
@@ -80,7 +61,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" href="" class="btn btn-gradient-primary btn-icon">
+                                    <button wire:click="$emit('formKategoriProdukOpen')" type="button" href="" class="btn btn-gradient-primary btn-icon">
                                         <i class="mdi mdi-library-plus"></i>
                                     </button>
 

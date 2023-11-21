@@ -29,6 +29,9 @@ Route::get('/adm/no-meja', [MenuController::class, 'index'])->middleware('hak_ak
 Route::get('/meja/{id}', [MenuController::class, 'meja']);
 
 //Admin
+Route::get('/adm', function(){
+    return redirect('/adm/login');
+});
 Route::get('/adm/dashboard', function(){
     $posisi = UserPosisi::all();
     return view('admin.beranda', compact('posisi'));
