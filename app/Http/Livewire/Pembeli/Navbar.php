@@ -14,11 +14,11 @@ class Navbar extends Component
         'pembayaran' => 'hitungCart',
     ];
     public $cartTotal;
-    public $id_user;
+    public $user_id;
     public $cart;
     public function mount(Request $request)
     {
-        $this->id_user = $request->session()->get('no_meja');
+        $this->user_id = $request->session()->get('no_meja');
         $this->cart = Cart::get();
         $this->hitungCart();
     }
@@ -30,7 +30,7 @@ class Navbar extends Component
     {
         $this->cartTotal = 0; 
         $data = Cart::get();
-        $index_transaksi = array_search($this->id_user, array_column($data['transaksi'], 'id_user'));
+        $index_transaksi = array_search($this->user_id, array_column($data['transaksi'], 'user_id'));
         if ($index_transaksi !== false ) {
             foreach ($data['transaksi'][$index_transaksi]['products'] as $p) {
                 $this->cartTotal += $p['qty'];

@@ -27,7 +27,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        @if (!empty($carts['transaksi'][$index_transaksi]) && $carts['transaksi'][$index_transaksi]['id_user'] == $id_user)
+                        @if (!empty($carts['transaksi'][$index_transaksi]) && $carts['transaksi'][$index_transaksi]['user_id'] == $user_id)
 
                             @foreach ($carts['transaksi'][$index_transaksi]['products'] as $index => $item)
                                 <tr>

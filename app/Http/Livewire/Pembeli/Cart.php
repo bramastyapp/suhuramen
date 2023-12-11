@@ -13,8 +13,9 @@ class Cart extends Component
     protected $listeners = [
         'produkDitambahkan' => 'updateCart',
     ];
+    public $formVisible;
     public $cart;
-    public $id_user;
+    public $user_id;
     public $index_transaksi;
     public $bayar;
     public $customer;
@@ -22,7 +23,7 @@ class Cart extends Component
 
     public function mount(Request $request)
     {
-        $this->id_user = $request->session()->get('no_meja');
+        $this->user_id = $request->session()->get('no_meja');
         $this->cart = FacadesCart::get();
         $this->inisialisasi();
         $this->hitung();
@@ -31,14 +32,13 @@ class Cart extends Component
     public function render()
     {
         $data = $this->cart;
-        // dd($data);
-        $this->index_transaksi = array_search($this->id_user, array_column($this->cart['transaksi'], 'id_user'));
+        $this->index_transaksi = array_search($this->user_id, array_column($this->cart['transaksi'], 'user_id'));
         return view('livewire.pembeli.cart', ['carts' => $data]);
     }
 
     public function inisialisasi()
     {
-        $this->index_transaksi = array_search($this->id_user, array_column($this->cart['transaksi'], 'id_user'));
+        $this->index_transaksi = array_search($this->user_id, array_column($this->cart['transaksi'], 'user_id'));
     }
 
     public function qtyPlus($idx_produk)
@@ -58,7 +58,7 @@ class Cart extends Component
     public function updateCart()
     {
         $this->cart = FacadesCart::get();
-        $this->index_transaksi = array_search($this->id_user, array_column($this->cart['transaksi'], 'id_user'));
+        $this->index_transaksi = array_search($this->user_id, array_column($this->cart['transaksi'], 'user_id'));
         $this->hitung();
     }
     
@@ -87,7 +87,7 @@ class Cart extends Component
             'customer' => 'required|min:3'
         ]);
         $data = FacadesCart::get();
-        Transaksi::where('id', $data['transaksi'][$this->index_transaksi]['id_transaksi'])->update([
+        Transaksi::where('id', $data['transaksi'][$this->index_transaksi]['transaksi_id'])->update([
             'customer' => $this->customer,
             'total' => $total,
             'status' => 2,
@@ -95,9 +95,9 @@ class Cart extends Component
         foreach ($data['transaksi'][$this->index_transaksi]['products'] as $p) {
             ItemTransaksi::create(
                 [
-                    'id_user' => $data['transaksi'][$this->index_transaksi]['id_user'],
-                    'id_transaksi' => $data['transaksi'][$this->index_transaksi]['id_transaksi'],
-                    'id_produk' => $p['id_produk'],
+                    'user_id' => null,
+                    'transaksi_id' => $data['transaksi'][$this->index_transaksi]['transaksi_id'],
+                    'produk_id' => $p['produk_id'],
                     'qty' => $p['qty'],
                     'harga_saat_transaksi' => $p['harga'],
                     'jenis_transaksi' => 2,
@@ -107,13 +107,17 @@ class Cart extends Component
         }
         FacadesCart::bayarClear($this->index_transaksi);
         $this->updateCart();
+
+        session()->put('pelunasan', $data['transaksi'][$this->index_transaksi]['transaksi_id']);
+        session()->put('customer', $this->customer);
         
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success',
-            'title' => 'Total bayar = Rp' . number_format($total+($total*0.1), 0, '', '.'),
-            'text' => 'Silahkan melakukan pembayaran di kasir, terimakasih',
-        ]);
+        // $this->dispatchBrowserEvent('alert-event', [
+        //     'type' => 'success',
+        //     'title' => 'Total bayar = Rp' . number_format($total+($total*0.1), 0, '', '.'),
+        //     'text' => 'Silahkan melakukan pembayaran di kasir, terimakasih',
+        // ]);
         $this->emit('pembayaran');
-        $this->customer = '';
+        $this->redirect('/pembayaran');
+        // $this->customer = '';
     }
 }

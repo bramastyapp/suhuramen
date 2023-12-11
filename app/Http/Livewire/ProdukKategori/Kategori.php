@@ -51,18 +51,27 @@ class Kategori extends Component
     public function hapusKategori($id)
     {
         $this->kategoriId = $id;
-        $this->dispatchBrowserEvent('konfirmasi-hapus-kategori');
+        $this->dispatchBrowserEvent('konfirmasi', [
+            'action' => 'kategoriTerhapus',
+            'text' => 'Pastikan bahwa kategori yang dihapus tidak ada produk yang masih tampil di menu.',
+        ]);
     }
 
     public function kategoriTerhapus()
     {
-        $produk = Produk::where('kategori', $this->kategoriId)->first();
+        $produk = Produk::where('produk_kategori_id', $this->kategoriId)->first();
 
         if ($produk) {
-            $this->dispatchBrowserEvent('ada-produk');
+            $this->dispatchBrowserEvent('terkonfirmasi', [
+                'title' => 'Perhatian!',
+                'text' => 'Kategori tidak dapat dihapus karena masih ada produk di dalam kategori, pastikan lagi tidak ada produk yang memakai kategori yang akan dihapus.',
+                'icon' => 'info',
+            ]);
         } else {
             ProdukKategori::find($this->kategoriId)->delete();
-            $this->dispatchBrowserEvent('kategori-terhapus');
+            $this->dispatchBrowserEvent('terkonfirmasi', [
+                'text' => 'Kategori dihapus.'
+            ]);
         }
     }
 }

@@ -9,21 +9,21 @@
                 </h3>
             </div>
         </div>
-        @if (Auth::user()->user_level < 4)
-            <div class="col">
-                <span class="float-end">
-                    <div class="btn btn-gradient-dark btn-sm" wire:click="mejaMin()" style="cursor: pointer">
-                        <i class="mdi mdi-minus"></i>
-                    </div>
-                    <div class="btn btn-secondary btn-sm">
-                        &nbsp;{{ $meja }}&nbsp;
-                    </div>
-                    <div class="btn btn-gradient-dark btn-sm" wire:click="mejaPlus()" style="cursor: pointer">
-                        <i class="mdi mdi-plus"></i>
-                    </div>
-                </span>
-            </div>
-        @endif
+        @can('edit_meja')            
+        <div class="col">
+            <span class="float-end">
+                <div class="btn btn-gradient-dark btn-sm" wire:click="mejaMin()" style="cursor: pointer">
+                    <i class="mdi mdi-minus"></i>
+                </div>
+                <div class="btn btn-secondary btn-sm">
+                    &nbsp;{{ $meja }}&nbsp;
+                </div>
+                <div class="btn btn-gradient-dark btn-sm" wire:click="mejaPlus()" style="cursor: pointer">
+                    <i class="mdi mdi-plus"></i>
+                </div>
+            </span>
+        </div>
+        @endcan
     </div>
     <div class="row">
         @for ($i = 1; $i <= $meja; $i++)
@@ -31,12 +31,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <a href="{{ url("meja/$i") }}" class="col btn btn-gradient-dark mb-3"
+                            <a href="{{ url("meja/".encrypt($i)) }}" class="col btn btn-gradient-dark mb-3"
                                 style="font-size: 1rem">Meja
                                 {{ $i }}
                             </a>
                             <div class="visible-print text-center">
-                                {!! QrCode::format('svg')->size(230)->generate(url("/meja/M$i")) !!}
+                                {!! QrCode::format('svg')->size(230)->generate(url("/meja/".encrypt($i))) !!}
                             </div>
                         </div>
                     </div>

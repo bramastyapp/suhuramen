@@ -23,18 +23,17 @@ class Cart
     {
         session()->put('cart', $cart);
     }
-    public function add($product, $idUser)
-
+    public function add($product, $user_id)
     {
-        //mendapatkan index dari array transaksi dengan id_user tertentu
+        //mendapatkan index dari array transaksi dengan user_id tertentu
         $cart = $this->get();
-        $idx = array_search($idUser, array_column($cart['transaksi'], 'id_user'));
+        $idx = array_search($user_id, array_column($cart['transaksi'], 'user_id'));
 
         $idx_produk = -1;
         $cek = 0;
         //mengecek apakah sudah ada produk dengan id yang sama
         foreach ($cart['transaksi'][$idx]['products'] as $index => $c) {
-            if ($product->id == $c['id_produk']) {
+            if ($product->id == $c['produk_id']) {
                 $cek = 1;
                 $idx_produk = $index;
                 break;
@@ -44,7 +43,7 @@ class Cart
             $cart['transaksi'][$idx]['products'][$idx_produk]['qty'] = $cart['transaksi'][$idx]['products'][$idx_produk]['qty']+1; 
         } else {
             $data = [
-                'id_produk' => $product->id,
+                'produk_id' => $product->id,
                 'nama' => $product->nama,
                 'harga' => $product->harga,
                 'qty' => 1,
@@ -64,15 +63,16 @@ class Cart
     public function clear($index_transaksi)
     {
         $cart = $this->get();
-        // dd($index_transaksi);
-        Transaksi::find($cart['transaksi'][$index_transaksi]['id_transaksi'])->delete();
+        Transaksi::find($cart['transaksi'][$index_transaksi]['transaksi_id'])->update([
+            'status' => -1
+        ]);
         array_splice($cart['transaksi'], $index_transaksi, 1);
+
         $this->set($cart);
     }
     public function bayarClear($index_transaksi)
     {
         $cart = $this->get();
-        // dd($index_transaksi);
         array_splice($cart['transaksi'], $index_transaksi, 1);
         $this->set($cart);
     }
@@ -98,7 +98,7 @@ class Cart
         $cart = $this->get();
         if(count($cart['transaksi'][$idx_transaksi]['products']) === 1)
         {
-            Transaksi::find($cart['transaksi'][$idx_transaksi]['id_transaksi'])->delete();
+            Transaksi::find($cart['transaksi'][$idx_transaksi]['transaksi_id'])->delete();
             array_splice($cart['transaksi'], $idx_transaksi, 1);
         }else{
             array_splice($cart['transaksi'][$idx_transaksi]['products'], $idx_produk, 1);
@@ -106,10 +106,10 @@ class Cart
         $this->set($cart);
     }
 
-    public function tambah_transaksi($id_transaksi, $id_user)
+    public function tambah_transaksi($transaksi_id, $user_id)
     {
         $cart = $this->get();
-        $data = ['id_transaksi' => $id_transaksi, 'id_user' => $id_user, 'products' => []];
+        $data = ['transaksi_id' => $transaksi_id, 'user_id' => $user_id, 'products' => []];
         array_push($cart['transaksi'], $data);
         $this->set($cart);
     }

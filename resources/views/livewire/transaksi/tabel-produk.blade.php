@@ -20,7 +20,7 @@
                         @foreach($search_results as $result)
                             <li class="list-group-item list-group-item-action">
                                 <a class="text-decoration-none text-black" wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result->id}}, {{$kasir->id}})" href="#">
-                                    {{ $result->nama }}
+                                    {{ $result->nama }} <b class="fst-italic text-danger">{{$result->status !== 1 ? '(Habis)' : ''}}</b> 
                                 </a>
                             </li>
                         @endforeach

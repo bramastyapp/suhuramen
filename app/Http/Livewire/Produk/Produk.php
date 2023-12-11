@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Produk;
 
 use App\Models\Produk as ModelsProduk;
 use App\Models\ProdukKategori;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -16,6 +17,7 @@ class Produk extends Component
         'produkTerhapus' => 'destroy'
     ];
 
+    public $kategoriId;
     public $produkId;
     public $formVisible;
     public $formEdit; 
@@ -23,19 +25,26 @@ class Produk extends Component
 
     public function render()
     {
-        $produk = ModelsProduk::all();
-        $kategori = ProdukKategori::all();
+        $kategori_pilih = ProdukKategori::all();
+        $kategori = $this->kategoriId ? ProdukKategori::where('id', $this->kategoriId)->get() : ProdukKategori::all();
         
         return view('livewire.produk.produk', [
-            'datas' => $produk,
+            'kategori_pilih' => $kategori_pilih,
             'kategori' => $kategori,
         ]);
     }
 
+    public function updateId($id)
+    {
+        $this->kategoriId = $id;
+    }
+    
     public function konfirmasiHapus($id)
     {
         $this->produkId = $id;
-        $this->dispatchBrowserEvent('konfirmasi-hapus-show');
+        $this->dispatchBrowserEvent('konfirmasi', [
+            'action' => 'produkTerhapus'
+        ]);
     }
 
     public function destroy()
@@ -47,7 +56,9 @@ class Produk extends Component
         }
         $produk->delete();
 
-        $this->dispatchBrowserEvent('produk-terhapus');
+        $this->dispatchBrowserEvent('terkonfirmasi', [
+            'text' => 'Produk telah dihapus.'
+        ]);
     }
 
     public function formTambahOpen()

@@ -8,20 +8,24 @@ use Livewire\Component;
 
 class StatusProduk extends Component
 {
+    public $kategoriId;
+
     public function render()
     {
-        $produk = Produk::all();
-        $kategori = ProdukKategori::all();
+        $kategori = $this->kategoriId ?  ProdukKategori::where('id', $this->kategoriId)->get() : ProdukKategori::all();        
+        $kategori_pilih = ProdukKategori::all();        
 
-        $status[] = [
-            'id' => 0,
-            'nama' => 'Habis',
-            'warna' => 'danger',
-        ];
-        $status[] = [
-            'id' => 1,
-            'nama' => 'Aktif',
-            'warna' => 'success',
+        $status = [
+            0 => [
+                'id' => 0,
+                'nama' => 'Habis',
+                'warna' => 'danger',
+            ],
+            1 => [
+                'id' => 1,
+                'nama' => 'Aktif',
+                'warna' => 'success',
+            ]
         ];
         $status_produk = [
             0 => [
@@ -35,13 +39,16 @@ class StatusProduk extends Component
                 'warna' => 'success'
             ],
         ];
-
         return view('livewire.produk.status-produk', [
-            'datas' => $produk, 
+            'kategori' => $kategori,
+            'kategori_pilih' => $kategori_pilih,
             'status' => $status, 
             'status_produk' => $status_produk, 
-            'kategori' => $kategori
         ]);
+    }
+    public function updateId($id)
+    {
+        $this->kategoriId = $id;
     }
 
     public function updateStatus($id, $status)
@@ -49,13 +56,12 @@ class StatusProduk extends Component
         $data = Produk::find($id);
         $data->status = $status;
         $data->save();
-        // return back()->with('toast_success', 'Status berhasil diperbarui');
     }
+
     public function updateStatusProduk($id, $status)
     {
         $data = Produk::find($id);
         $data->status_produk = $status;
         $data->save();
-        // return back()->with('toast_success', 'Status berhasil diperbarui');
     }
 }

@@ -425,7 +425,7 @@
                 </div>
             @else
                 <div>
-                    <livewire:pembeli.hero>
+                    @livewire('pembeli.hero')
                 </div>
             @endif
     </div>
@@ -455,14 +455,56 @@
             });
         })
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        window.addEventListener('swal:modal', event => {
-            swal({
+        // konfirmasi hapus
+        window.addEventListener('konfirmasi', event => {
+            Swal.fire({
+                title: "Peringatan!",
+                text: event.detail.text ? event.detail.text : "Apa anda yakin ingin menghapus?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#07cdae",
+                cancelButtonColor: "#3e4b5b",
+                confirmButtonText: event.detail.buttonText ? event.detail.buttonText : "Ya, hapus!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit(event.detail.action);
+                }
+            });
+
+        })
+        window.addEventListener('terkonfirmasi', event => {
+            Swal.fire({
+                title: event.detail.title ? event.detail.title : "Berhasil!",
+                text: event.detail.text ? event.detail.text : "Data telah dihapus.",
+                icon: event.detail.icon ? event.detail.icon : "success",
+                confirmButtonColor: "#07cdae",
+            });
+        })
+        window.addEventListener('alert-event', event => {
+            Swal.fire({
                 title: event.detail.title,
                 text: event.detail.text,
-                icon: event.detail.type,
+                icon: event.detail.icon,
+                confirmButtonColor: "#07cdae",
             });
-        });
+        })
+        window.addEventListener('alert-toast', event => {
+            Swal.fire({
+                // title: event.detail.title,
+                showConfirmButton: false,
+                text: event.detail.text ? event.detail.text : "Berhasil",
+                icon: event.detail.icon ? event.detail.icon : "success",
+                position: 'bottom-end',
+                background: '#060c22',
+                color: '#fff',
+                toast: true,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        })
     </script>
 </body>
 

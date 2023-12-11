@@ -25,7 +25,6 @@
 </head>
 <style>
     .custom-modal {
-        position: fixed;
         z-index: 1500;
         background-color: rgba(49, 49, 49, 0.6);
         position: fixed;
@@ -39,7 +38,16 @@
     }
 
     .custom-modal-body {
-        margin: 30px auto;
+        position: fixed;
+        z-index: 1600;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .swal2-container {
+        z-index: 2500 !important;
+        /* Atur nilai z-index sesuai kebutuhan Anda */
     }
 </style>
 
@@ -51,7 +59,7 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_sidebar.html -->
-            @include('admin.includes.sidebar')
+            @livewire('includes.sidebar')
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -83,66 +91,56 @@
     <script src="{{ asset('vendor/purpleadmin') }}/assets/js/dashboard.js"></script>
     <script src="{{ asset('vendor/purpleadmin') }}/assets/js/todolist.js"></script>
     <!-- End custom js for this page -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
     @livewireScripts
+    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
-        // hapus produk
-        window.addEventListener('konfirmasi-hapus-show', event => {
+        // konfirmasi hapus
+        window.addEventListener('konfirmasi', event => {
             Swal.fire({
                 title: "Peringatan!",
-                text: "Apa anda yakin ingin menghapus?",
+                text: event.detail.text ? event.detail.text : "Apa anda yakin ingin menghapus?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, hapus!",
+                confirmButtonColor: "#07cdae",
+                cancelButtonColor: "#3e4b5b",
+                confirmButtonText: event.detail.buttonText ? event.detail.buttonText : "Ya, hapus!",
                 cancelButtonText: "Batal",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emit('produkTerhapus');
+                    Livewire.emit(event.detail.action);
                 }
             });
 
         })
-        window.addEventListener('produk-terhapus', event => {
+        window.addEventListener('terkonfirmasi', event => {
             Swal.fire({
-                title: "Berhasil!",
-                text: "Data anda sudah terhapus.",
-                icon: "success"
+                title: event.detail.title ? event.detail.title : "Berhasil!",
+                text: event.detail.text ? event.detail.text : "Data telah dihapus.",
+                icon: event.detail.icon ? event.detail.icon : "success",
+                confirmButtonColor: "#07cdae",
             });
         })
 
-        // hapus produk kategori
-        window.addEventListener('konfirmasi-hapus-kategori', event => {
+        window.addEventListener('alert-event', event => {
             Swal.fire({
-                title: "Yakin ingin menghapus?",
-                text: "Pastikan bahwa kategori yang dihapus tidak ada produk yang masih tampil di menu.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, hapus!",
-                cancelButtonText: "Batal",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emit('kategoriTerhapus');
-                }
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.icon,
+                confirmButtonColor: "#07cdae",
             });
         })
-
-        window.addEventListener('kategori-terhapus', event => {
+        window.addEventListener('alert-toast', event => {
             Swal.fire({
-                title: "Berhasil!",
-                text: "Data anda sudah terhapus.",
-                icon: "success"
-            });
-        })
-
-        window.addEventListener('ada-produk', event => {
-            Swal.fire({
-                title: "Perhatian!",
-                text: "Kategori tidak dapat terhapus karena masih ada produk di dalam kategori, pastikan lagi tidak ada produk yang memakai kategori yang akan dihapus.",
-                icon: "info"
+                // title: event.detail.title,
+                showConfirmButton: false,
+                text: event.detail.text ? event.detail.text : "Berhasil",
+                icon: event.detail.icon ? event.detail.icon : "success",
+                position: 'top-end',
+                toast: true,
+                timer: 3000,
+                timerProgressBar: true,
             });
         })
     </script>
@@ -153,15 +151,6 @@
                 reverse: true
             });
         })
-    </script>
-    <script>
-        window.addEventListener('swal:modal', event => {
-            swal({
-                title: event.detail.title,
-                text: event.detail.text,
-                icon: event.detail.type,
-            });
-        });
     </script>
 </body>
 

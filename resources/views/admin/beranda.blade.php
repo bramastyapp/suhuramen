@@ -21,7 +21,7 @@
                     diverifikasi, terimakasih.</span>
             </div>
         </div>
-    @elseif (!Auth::user()->user_level)
+    @elseif (!implode('', Auth::user()->roles->pluck('name')->toArray()))
         <div class="card">
             <div class="card-header p-4">
             </div>
@@ -40,13 +40,7 @@
                 <span class="fs-5 fw-semibold">Haloo <b>{{ Auth::user()->name }}</b> ! <br>
                     Selamat datang di Website Admin <b
                         style="font-family: 'Caveat', cursive; font-size: 2rem">SuhuRamen</b>. Posisi pekerjaan anda sebagai
-                    <b>
-                        @foreach ($posisi as $p)
-                            @if ($p->kode == Auth::user()->user_level)
-                                {{ $p->nama_posisi }}
-                            @endif
-                        @endforeach
-                    </b>.</span>
+                    <b>{{ implode('', Auth::user()->roles->pluck('name')->toArray()) }}</b>.</span>
             </div>
         </div>
     @endif

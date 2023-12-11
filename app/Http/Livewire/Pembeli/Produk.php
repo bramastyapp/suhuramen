@@ -8,13 +8,15 @@ use App\Models\ProdukKategori;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class Produk extends Component
 {
-    public $id_user;
+    public $user_id;
+
     public function mount(Request $request)
     {
-        $this->id_user = $request->session()->get('no_meja');
+        $this->user_id = $request->session()->get('no_meja');
     }
     public function render()
     {
@@ -23,29 +25,33 @@ class Produk extends Component
         return view('livewire.pembeli.produk', [
             'produk' => $produk,
             'kategori' => $kategori,
-            'id_user' => $this->id_user,
+            'user_id' => $this->user_id,
         ]);
     }
 
-    public function selectProduct($id_produk)
+    public function selectProduct($produk_id)
     {
         $data = Cart::get();
-        $index_transaksi = array_search($this->id_user, array_column($data['transaksi'], 'id_user'));
-        // dd($index_transaksi);
+        $index_transaksi = array_search($this->user_id, array_column($data['transaksi'], 'user_id'));
+
         if ($index_transaksi == false && $index_transaksi !== 0) {
-            // dd('masuk');
+            $uuid = Str::uuid();
             Transaksi::create([
-                'id_user' => $this->id_user,
                 'total' => 0,
                 'bayar' => 0,
                 'jenis' => 2,
                 'status' => -1,
+                'meja' => $this->user_id,
+                'customer' => $uuid,
             ]);
-            $transaksi = Transaksi::latest()->first();
-            Cart::tambah_transaksi($transaksi->id, $this->id_user);
+            $transaksi = Transaksi::where('customer', $uuid)->first();
+            Cart::tambah_transaksi($transaksi->id, $this->user_id);
         }
-        $produk = ModelsProduk::where('id', $id_produk)->first();
-        Cart::add($produk, $this->id_user);
+        $produk = ModelsProduk::where('id', $produk_id)->first();
+        Cart::add($produk, $this->user_id);
         $this->emit('produkDitambahkan');
+        $this->dispatchBrowserEvent('alert-toast', [
+            'text' => 'Produk ditambahkan.'
+        ]);
     }
 }

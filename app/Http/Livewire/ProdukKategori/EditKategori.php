@@ -29,6 +29,14 @@ class EditKategori extends Component
 
     public function update()
     {
+        $messages = [
+            'required' => 'Bagian ini harus diisi.',
+        ];
+        $this->validate([
+            'nama' => 'required|min:3',
+            'kode' => 'required',
+        ], $messages);
+        
         ProdukKategori::find($this->kategoriId)->update([
             'kode_kategori' => $this->kode,
             'nama_kategori' => $this->nama,

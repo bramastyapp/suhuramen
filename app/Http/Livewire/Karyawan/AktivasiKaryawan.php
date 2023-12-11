@@ -3,8 +3,9 @@
 namespace App\Http\Livewire\Karyawan;
 
 use App\Models\User;
-use App\Models\UserPosisi;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
 
 class AktivasiKaryawan extends Component
 {
@@ -12,6 +13,7 @@ class AktivasiKaryawan extends Component
 
     public function render()
     {
+        abort_if(Gate::denies('lihat_aktivasi_karyawan'), 403);
         $status = [
             0 => [
                 'nama' => 'Tidak Aktif',
@@ -22,21 +24,16 @@ class AktivasiKaryawan extends Component
                 'warna' => 'success',
             ],
         ];
-        $this->karyawan = User::orderBy('user_level', 'asc')->get();
-        $posisi = UserPosisi::all();
+        $this->karyawan = User::all();
+        $roles = Role::all();
         
         return view('livewire.karyawan.aktivasi-karyawan', [
             'karyawan' => $this->karyawan,
             'status' => $status,
-            'posisi' => $posisi,
+            'roles' => $roles,
         ]);
     }
     
-    public function update()
-    {
-        $this->karyawan = User::all();
-    }
-
     public function status($status, $id)
     {
         User::find($id)->update([

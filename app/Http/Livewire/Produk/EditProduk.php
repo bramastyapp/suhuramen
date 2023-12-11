@@ -37,7 +37,7 @@ class EditProduk extends Component
         $this->produkId = $produk['id'];
         $this->nama = $produk['nama'];
         $this->kode = $produk['kode'];
-        $this->kategori = $produk['kategori'];
+        $this->kategori = $produk['produk_kategori_id'];
         $this->deskripsi = $produk['deskripsi'];
         $this->harga = $produk['harga'];
         if ($produk['gambar']) {
@@ -49,7 +49,7 @@ class EditProduk extends Component
     public function updateKode()
     {
         $kategori = ProdukKategori::find($this->kategori);
-        $produk = count(Produk::where('kategori', $this->kategori)->get());
+        $produk = count(Produk::where('produk_kategori_id', $this->kategori)->get());
 
         if($this->kategori)
         {
@@ -62,9 +62,9 @@ class EditProduk extends Component
     public function update()
     {
         $messages = [
-            'required' => ':attribute harus diisi.',
-            'numeric'    => 'format :attribute harus angka.',
-            'min'    => ':attribute tidak boleh kurang dari 3 karakter.',
+            'required' => 'Bagian ini harus diisi.',
+            'numeric'    => 'format harus angka.',
+            'min'    => 'Bagian ini tidak boleh kurang dari 3 karakter.',
             'image' => 'file yang di upload harus gambar.'
         ];
         $this->validate([
@@ -93,7 +93,7 @@ class EditProduk extends Component
         $produk->update([
             'nama' => $this->nama,
             'kode' => $this->kode,
-            'kategori' => $this->kategori,
+            'produk_kategori_id' => $this->kategori,
             'deskripsi' => $this->deskripsi,
             'gambar' => $nama_gambar,
             'harga' => $this->harga,

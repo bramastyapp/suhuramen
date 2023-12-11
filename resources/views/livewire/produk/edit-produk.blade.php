@@ -1,5 +1,6 @@
 <div>
     <div class="custom-modal">
+    </div>
         <div class="custom-modal-body" style="max-width: 60%">
             <div class="card">
                 <div class="card-body">
@@ -104,5 +105,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 </div>

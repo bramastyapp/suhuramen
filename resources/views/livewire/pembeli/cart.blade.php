@@ -12,9 +12,7 @@
                                 <div class="col">
                                     <span class="btn btn-success float-start btn-sm">
                                         <i class="bi bi-person-check-fill"></i>
-                                        {{ $id_user }}</span>
-                                    <input type="hidden" readonly class="form-control-plaintext form-control-sm"
-                                        value="18">
+                                        {{ $user_id }}</span>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +34,7 @@
                             <th></th>
                         </thead>
                         <tbody>
-                            @if (!empty($carts['transaksi'][$index_transaksi]) && $carts['transaksi'][$index_transaksi]['id_user'] == $id_user)
+                            @if (!empty($carts['transaksi'][$index_transaksi]) && $carts['transaksi'][$index_transaksi]['user_id'] == $user_id)
                                 @foreach ($carts['transaksi'][$index_transaksi]['products'] as $index => $item)
                                     <tr>
                                         <td>{{ $item['nama'] }}</td>
@@ -122,28 +120,28 @@
                             </div>
                         </div>
                     </div>
-                    @if ($totalTransaksi > 0)                                    
-                    <div class="row">
-                        <form wire:submit.prevent='pembayaran({{ $totalTransaksi }})'
-                            method="post">
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Nama Pembeli</label>
-                                <input type="text" class="form-control @error('customer') is-invalid @enderror"
-                                    wire:model="customer" placeholder="masukkan nama anda...">
-                                @error('customer')
-                                    <span class="invalid-feedback">
-                                        <p class="fst-italic" style="font-size: 0.8rem">{{ $message }}</p>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-dark">Bayar</button>
-                            </div>
-                        </form>
-                    </div>
-                                @endif
+                    @if ($totalTransaksi > 0)
+                        <div class="row">
+                            <form wire:submit.prevent='pembayaran({{ $totalTransaksi }})' method="post">
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Nama Pembeli</label>
+                                    <input type="text" class="form-control @error('customer') is-invalid @enderror"
+                                        wire:model="customer" placeholder="masukkan nama anda...">
+                                    @error('customer')
+                                        <span class="invalid-feedback">
+                                            <p class="fst-italic" style="font-size: 0.8rem">{{ $message }}</p>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-dark">Bayar</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
 </section>

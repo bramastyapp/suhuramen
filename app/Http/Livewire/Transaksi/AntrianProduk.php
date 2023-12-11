@@ -25,7 +25,8 @@ class AntrianProduk extends Component
 
     public function updatedQuery()
     {
-        $this->search_results = Produk::where('nama', 'like', '%' . $this->query . '%')->get();
+        $this->search_results = Produk::where('nama', 'like', '%' . $this->query . '%')
+        ->where('status_produk', 1)->get();
     }
 
     public function resetQuery()

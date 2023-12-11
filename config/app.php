@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\CartFacadeServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 
@@ -232,6 +234,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

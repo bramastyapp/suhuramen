@@ -2,49 +2,74 @@
 
 namespace App\Http\Livewire\Karyawan;
 
-use App\Models\User;
-use App\Models\UserPosisi;
+
 use App\Models\UserRole;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ManagementKaryawan extends Component
-{
-    public $karyawan;
+{  
+    protected $listeners = [
+        'formRoleClose',
+        'formUserRoleClose',
+        'hapus-user-role' => 'destroy'
+    ];
+    public $formRoleVisible;
+    public $userRoleTambah;
+    public $userRoleEdit;
+    public $userRoleId;
 
     public function render()
     {
-        $this->karyawan = User::orderBy('user_level', 'asc')->get();
-        $posisi = UserPosisi::all();
-        $role = UserRole::all();
-        
+        $roles = Role::with('permissions')->get();
+        $permissions = DB::table('role_has_permissions')->get();
         return view('livewire.karyawan.management-karyawan', [
-            'karyawan' => $this->karyawan,
-            'posisi' => $posisi,
-            'role' => $role,
+            'roles' => $roles,
+            'permissions' => $permissions,
         ]);
-    }
-    
-    public function update()
-    {
-        $this->karyawan = User::all();
     }
 
-    public function status($status, $id)
+    public function formRoleOpen($id)
     {
-        User::find($id)->update([
-            'status' => $status
+        $this->emit('formRoleOpen', $id);
+        $this->formRoleVisible = true;
+    }
+    public function formRoleClose()
+    {
+        $this->formRoleVisible = false;
+    }
+    public function userRoleTambah()
+    {
+        $this->formRoleVisible = true;
+        $this->userRoleTambah = true;
+    }
+    public function formUserRoleOpen($id)
+    {
+        $this->emit('formUserRoleOpen', $id);
+        $this->formRoleVisible = true;
+        $this->userRoleEdit = true;
+    }
+    public function formUserRoleClose()
+    {
+        $this->formRoleVisible = false;
+        $this->userRoleTambah = false;
+        $this->userRoleEdit = false;
+    }
+    public function formUserRoleHapus($id)
+    {
+        $this->userRoleId = $id;
+        $this->dispatchBrowserEvent('konfirmasi-hapus', [
+            'action' => 'hapus-user-role'
         ]);
     }
-    public function posisi($id_posisi, $id)
+
+    public function destroy()
     {
-        User::find($id)->update([
-            'user_level' => $id_posisi
-        ]);
-    }
-    public function role($id_role, $id)
-    {
-        User::find($id)->update([
-            'user_role' => $id_role
+        Role::find($this->userRoleId)->delete();
+        $this->dispatchBrowserEvent('terhapus', [
+            'text' => 'User Role telah dihapus.'
         ]);
     }
 }

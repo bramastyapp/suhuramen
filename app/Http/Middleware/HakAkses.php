@@ -20,7 +20,7 @@ class HakAkses
         // dd($roles);
         $user = Auth::user();
         foreach ($roles as $role) {
-            if($user->user_level == $role){
+            if($user->user_role == $role){
                 return $next($request);
             }
         }

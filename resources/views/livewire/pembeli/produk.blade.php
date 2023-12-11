@@ -80,7 +80,7 @@
                 </div>
                 <div class="row">
                     @foreach ($produk as $p)
-                        @if ($p->kategori == $k->id && $p->status === 1 && $p->status_produk === 1)
+                        @if ($p->produk_kategori_id == $k->id && $p->status === 1 && $p->status_produk === 1)
                             <div class="col-lg-4 col-md-6">
                                 <div class="menu">
                                     <div class="menu-img">
@@ -118,7 +118,7 @@
                         @endif
                     @endforeach
                     @foreach ($produk as $p)
-                        @if ($p->kategori == $k->id && $p->status === 0 && $p->status_produk === 1)
+                        @if ($p->produk_kategori_id == $k->id && $p->status === 0 && $p->status_produk === 1)
                             <div class="col-lg-4 col-md-6">
                                 <div class="menu box">
                                     <div class="ribbon ribbon-top-left"><span>Habis</span></div>

@@ -28,16 +28,16 @@
 
         <ul class="navbar-nav navbar-nav-right">
             @guest
-                <li>
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-gradient-primary">Sign-up</a>
-                </li>
             @else
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <div class="nav-profile-img">
-                            <img src="{{ asset('vendor/purpleadmin') }}/assets/images/faces/face1.jpg" alt="image">
+                            @if (Auth::user()->foto)
+                                <img src="{{ asset('storage') }}/{{ Auth::user()->foto }}" alt="profile" style="object-fit: cover">
+                            @else
+                                <img src="{{ asset('vendor/purpleadmin') }}/assets/images/faces/face1.jpg" alt="profile">
+                            @endif
                         </div>
                     </a>
                     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">

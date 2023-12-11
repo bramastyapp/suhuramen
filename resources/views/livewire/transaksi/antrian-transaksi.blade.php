@@ -26,11 +26,11 @@
                 </thead>
                 <tbody>
                     @foreach ($datas as $data)
-                        @if ($data->status == 2)
+                        @if ($data->status === 2)
                             <tr>
                                 <td>1</td>
                                 <td>{{ $data->customer }}</td>
-                                <td>{{ $data->id_user }}</td>
+                                <td>{{ $data->meja }}</td>
                                 <td>Rp {{ number_format($data->total + ($data->total*0.1), 0, '', '.') }}</td>
                                 <td>
                                     @foreach ($status as $index => $st)
@@ -72,12 +72,15 @@
                     <th>Opsi</th>
                 </thead>
                 <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach ($datas as $data)
                         @if ($data->status != 2 && $data->status != -1)
                             <tr>
-                                <td>1</td>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ $data->customer }}</td>
-                                <td>{{ $data->id_user }}</td>
+                                <td>{{ $data->meja }}</td>
                                 <td>Rp {{ number_format($data->total+($data->total*0.1), 0, '', '.') }}</td>
                                 <td>
                                     @foreach ($status as $index => $st)

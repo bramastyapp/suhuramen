@@ -12,11 +12,13 @@
                 <i class="mdi mdi-view-day"></i>
             </span> Kelola Kategori
         </h3>
-        <button wire:click='formTambahOpen' type="button" class="btn btn-gradient-success mb-3" data-bs-toggle="modal"
-            data-bs-target="#tambah-kategori">
-            Tambah Kategori
-            <i class="mdi mdi-shape-square-plus btn-icon-append"></i>
-        </button>
+        @can('tambah_kategori')
+            <button wire:click='formTambahOpen' type="button" class="btn btn-gradient-success mb-3" data-bs-toggle="modal"
+                data-bs-target="#tambah-kategori">
+                Tambah Kategori
+                <i class="mdi mdi-shape-square-plus btn-icon-append"></i>
+            </button>
+        @endcan
     </div>
 
     <div class="row">
@@ -39,12 +41,18 @@
                                 <td>{{ $i }}</td>
                                 <td>{{ $data->nama_kategori }}</td>
                                 <td>
-                                    <a wire:click.prevent="updateKategori({{$data->id}})" class="btn btn-gradient-dark btn-sm">
-                                        <i class="mdi mdi-lead-pencil"></i>
-                                    </a>
-                                    <a wire:click.prevent='hapusKategori({{$data->id}})' href="" class="btn btn-gradient-info btn-sm">
-                                        <i class="mdi mdi-delete-forever"></i>
-                                    </a>
+                                    @can('edit_kategori')
+                                        <a wire:click.prevent="updateKategori({{ $data->id }})"
+                                            class="btn btn-gradient-dark btn-sm">
+                                            <i class="mdi mdi-lead-pencil"></i>
+                                        </a>
+                                    @endcan
+                                    @can('hapus_kategori')
+                                        <a wire:click.prevent='hapusKategori({{ $data->id }})' href=""
+                                            class="btn btn-gradient-danger btn-sm">
+                                            <i class="mdi mdi-delete-forever"></i>
+                                        </a>
+                                    @endcan
                                 </td>
                             </tr>
                             @php

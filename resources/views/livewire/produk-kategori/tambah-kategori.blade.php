@@ -1,6 +1,7 @@
 <div>
-    <div class="custom-modal">
-        <div class="custom-modal-body" style="max-width: 40%">
+    <div wire:click="$emit('formKategoriClose')" class="custom-modal">
+    </div>
+        <div class="custom-modal-body" style="max-width: 40%;">
             <div class="card">
                 <div class="card-body">
                     <form wire:submit.prevent='store' class="row g-3 pt-3">
@@ -35,5 +36,5 @@
                 </div>
             </div>
         </div>
-    </div>
+
 </div>

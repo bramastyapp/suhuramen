@@ -46,7 +46,7 @@ class AntrianTransaksi extends Component
 
     public function getTransaksi()
     {
-        $this->transaksi = Transaksi::where('jenis', 2)->orderBy('created_at', 'asc')->get();
+        $this->transaksi = Transaksi::where('jenis', 2)->orderBy('updated_at', 'desc')->get();
     }
 
     public function status($index, $id)

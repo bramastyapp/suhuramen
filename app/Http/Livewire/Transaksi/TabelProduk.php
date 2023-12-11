@@ -17,14 +17,13 @@ class TabelProduk extends Component
 
     public function mount()
     {
-        $this->query = '';
+        $this->query;
         $this->search_results = Collection::empty();
     }
 
     public function render()
     {
         $kasir = User::find(Auth::user()->id);
-        // dd(Cart::get());
         return view('livewire.transaksi.tabel-produk', [
             'kasir' => $kasir,
         ]);
@@ -32,7 +31,9 @@ class TabelProduk extends Component
 
     public function updatedQuery()
     {
-        $this->search_results = Produk::where('nama', 'like', '%' . $this->query . '%')->get();
+        $this->search_results = Produk::where('nama', 'like', '%' . $this->query . '%')
+        ->where('status_produk', 1)
+        ->get();
     }
 
     public function resetQuery()
@@ -44,11 +45,11 @@ class TabelProduk extends Component
     public function selectProduct(int $id, int $idKasir)
     {
         $data = Cart::get();
-        $index_transaksi = array_search($idKasir, array_column($data['transaksi'], 'id_user'));
+        $index_transaksi = array_search($idKasir, array_column($data['transaksi'], 'user_id'));
 
         if ($index_transaksi == false && $index_transaksi !== 0) {
             Transaksi::create([
-                'id_user' => $idKasir,
+                'user_id' => $idKasir,
                 'total' => 0,
                 'bayar' => 0,
                 'jenis' => 1,

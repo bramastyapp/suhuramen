@@ -5,22 +5,14 @@
                 @livewire('transaksi.antrian-produk')
                 @if ($transaksiPembayaran && $transaksiPembayaran->count() > 0)
                     <div class="row mt-3">
-                        <div class="col">
+                        <div class="col mb-3">
                             <div class="row">
                                 <div class="col">
                                     <span class="btn btn-success float-start btn-sm">
                                         <i class="mdi mdi-account-check"></i>
                                         {{ $transaksiPembayaran->customer }}</span>
-                                    <input type="hidden" readonly class="form-control-plaintext form-control-sm"
-                                        value="18">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <a href="/"
-                                class="btn btn-success btn-sm float-end mb-3">{{ $transaksiPembayaran->id_user }}
-                                <i class="mdi mdi-clipboard-text"></i>
-                            </a>
                         </div>
                     </div>
                 @endif
@@ -36,20 +28,20 @@
                             @foreach ($itemTransaksi as $item)
                                 <tr>
                                     @foreach ($produk as $p)
-                                        @if ($p->id == $item->id_produk)
+                                        @if ($p->id == $item->produk_id)
                                             <td>{{ $p->nama }}</td>
                                         @endif
                                     @endforeach
                                     <td>
                                         <span>
                                             <div class="btn btn-dark btn-sm"
-                                                wire:click="qtyMin({{ $item->id }},{{ $item->id_transaksi }})"
+                                                wire:click="qtyMin({{ $item->id }},{{ $item->transaksi_id }})"
                                                 style="cursor: pointer">
                                                 <i class="mdi mdi-minus"></i>
                                             </div>
                                             &nbsp;{{ $item->qty }}&nbsp;
                                             <div class="btn btn-dark btn-sm"
-                                                wire:click="qtyPlus({{ $item->id }},{{ $item->id_transaksi }})"
+                                                wire:click="qtyPlus({{ $item->id }},{{ $item->transaksi_id }})"
                                                 style="cursor: pointer">
                                                 <i class="mdi mdi-plus"></i>
                                             </div>
@@ -58,7 +50,7 @@
                                     <td>{{ $item->harga_saat_transaksi * $item->qty }}</td>
                                     <td>
                                         <div class="btn btn-danger btn-sm"
-                                            wire:click="hapusCartId({{ $item->id }},{{ $item->id_transaksi }})">
+                                            wire:click="hapusCartId({{ $item->id }},{{ $item->transaksi_id }})">
                                             <i class="mdi mdi-close-circle-outline"></i>
                                         </div>
                                     </td>
